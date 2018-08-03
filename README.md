@@ -8,7 +8,7 @@
 <script type="text/javascript" src="dragons.js"></script>
 <script type="text/javascript" src="calc.js"></script>
 <script type="text/javascript">
-    list = breed_calc(d1,d2,beb);
+    var list = breed_calc(d1,d2,beb);
 </script>
 ```
 
@@ -17,4 +17,5 @@ the arguments `d1` and `d2` specify the parent dragons.  they are keys from the 
 ## license
 
 released to the public domain.
+
 http://creativecommons.org/publicdomain/zero/1.0/
