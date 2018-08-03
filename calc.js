@@ -242,10 +242,7 @@
 
   function check_available (dragon, query) {
     if (dragon['available'] == 'never')   { return false; }
-
-    if (query['beb']) {
-      if (dragon['available'] != 'no-beb') { return true; }
-    }
+    if (query['beb'])                     { return true; }
     if (/^yes/.test(dragon['available'])) { return true; }
 
     var d1; if (d1 = query['d1']) {
