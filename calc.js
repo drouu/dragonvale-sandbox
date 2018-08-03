@@ -10,7 +10,6 @@
 // configuration
 
   var bring_back = false;
-      bring_back = true;
   var breed_gems = false;
   var epic_counts = false;
 
