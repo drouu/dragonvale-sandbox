@@ -9,10 +9,6 @@
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // configuration
 
-  var bring_back = false;
-  var breed_gems = false;
-  var epic_counts = false;
-
   var weight = {
     'hybrid':           10,
     'primary':          2,
@@ -31,9 +27,6 @@
     'monolith', 'moon', 'olympus', 'ornamental', 'rainbow', 'seasonal',
     'snowflake', 'sun', 'treasure'
   ];
-  if (epic_counts) {
-    epic_list.push('epic');
-  }
   var rift_list = [ 'rift' ];
   var gem_list = [ 'gemstone', 'crystalline' ];
 
@@ -255,10 +248,6 @@
     }
     if (/^yes/.test(dragon['available'])) { return true; }
 
-    if (breed_gems) {
-      if (dragon['type'] == 'gemstone')   { return true; }
-      if (dragon['type'] == 'crystalline') { return true; }
-    }
     var d1; if (d1 = query['d1']) {
       if (dragon['name'] == d1['name'])   { return true; }
     }
