@@ -10,7 +10,7 @@ this is the fundamental algorithm behind the dragonvale sandbox breeding calcula
         list = breed_calc(d1,d2,beb);
     </script>
 
-the function arguments d1 and d2 specify the parent dragons.  they are keys from the dragons.js file, such as "Panlong_Dragon".  beb is a boolean value which specifies whether or not bring-em-back is in effect.
+the arguments d1 and d2 specify the parent dragons.  they are keys from the dragons.js file, such as "Panlong_Dragon".  beb is a boolean value which specifies whether or not bring-em-back is in effect.
 
 ## license
 
