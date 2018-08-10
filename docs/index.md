@@ -1,6 +1,6 @@
 <div id="sandbox">
   <p><select id="d1"></select>
-    <span style="margin: 0px 2em;">x</span>
+    <span style="margin: 0px 0.5em;">x</span>
     <select id="d2"></select></p>
   <p><input id="beb" type="checkbox" /> BEB</p>
   <table>
