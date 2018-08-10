@@ -4,7 +4,7 @@
     <select id="d2"></select></p>
   <p><input id="beb" type="checkbox" /> BEB</p>
   <table>
-    <thead><tr><th>Dragon</th><th>Time</th><th>Habitats</th></thead>
+    <thead><tr><th>Name</th><th>Time</th><th>Habitats</th></tr></thead>
     <tbody id="results"></tbody>
   </table>
 </div>

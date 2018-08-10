@@ -17,6 +17,9 @@
       $('d1').insert(Builder.node('option',attr,name));
       $('d2').insert(Builder.node('option',attr,name));
     });
+    $('d1').setValue('Fire_Dragon');
+    $('d2').setValue('Plant_Dragon');
+
     $('d1').observe('change',update_results);
     $('d2').observe('change',update_results);
     $('beb').observe('change',update_results);
