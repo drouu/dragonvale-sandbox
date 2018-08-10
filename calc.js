@@ -2,7 +2,7 @@
 // dvbox/calc.js
 //
 // by drow <drow@bin.sh>
-// http://creativecommons.org/publicdomain/zero/1.0/
+// http://unlicense.org/
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // requires Prototype

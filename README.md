@@ -18,6 +18,4 @@ for a working example, see https://drouu.github.io/dragonvale-sandbox/
 
 ## license
 
-`calc.js` is dedicated to the public domain.
-
-http://creativecommons.org/publicdomain/zero/1.0/
+`calc.js` is free and released to the public domain.  http://unlicense.org/
