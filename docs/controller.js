@@ -38,7 +38,7 @@
 
       list.sort().each(function (key) {
         var name = dragons[key]['name'];
-        $('results').insert(Builder.node('tr',Builder.node('td',name));
+        $('results').insert(Builder.node('tr',Builder.node('td',name)));
       });
     } else {
       $('results').update('No dragons');
