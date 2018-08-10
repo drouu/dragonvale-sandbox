@@ -11,11 +11,12 @@
 
   function init_sandbox () {
     Object.keys(dragons).sort().each(function (key) {
-      var option = Builder.node('option', { 'value': key }, [ dragons[key]['name'] ]);
-      $('d1').insert(option);
-      $('d2').insert(option);
+      var attr = { 'value': key };
+      var name = dragons[key]['name'];
+
+      $('d1').insert(Builder.node('option',attr,name));
+      $('d2').insert(Builder.node('option',attr,name));
     });
-    alert('done');
   }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
