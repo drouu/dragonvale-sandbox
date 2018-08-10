@@ -5,6 +5,10 @@
 // http://creativecommons.org/publicdomain/zero/1.0/
 //
 // requires Prototype
+// http://prototypejs.org/
+//
+// requires script.aculo.us/Builder
+// http://script.aculo.us/
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // init sandbox
