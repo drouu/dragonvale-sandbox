@@ -25,7 +25,7 @@
   var epic_list = [
     'apocalypse', 'aura', 'chrysalis', 'dream', 'galaxy', 'hidden',
     'monolith', 'moon', 'olympus', 'ornamental', 'rainbow', 'seasonal',
-    'snowflake', 'sun', 'treasure'
+    'snowflake', 'sun', 'surface', 'treasure'
   ];
   var rift_list = [ 'rift' ];
   var gem_list = [ 'gemstone', 'crystalline' ];
