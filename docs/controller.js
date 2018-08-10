@@ -37,8 +37,11 @@
       $('results').update('');
 
       list.sort().each(function (key) {
-        var name = dragons[key]['name'];
-        $('results').insert(Builder.node('tr',Builder.node('td',name)));
+        $('results').insert(Builder.node('tr',[
+          Builder.node('td',dragons[key]['name']),
+          Builder.node('td',dragons[key]['dhms']),
+          Builder.node('td',dragons[key]['habitats'].join(', ')),
+        ]));
       });
     } else {
       $('results').update('No dragons');
