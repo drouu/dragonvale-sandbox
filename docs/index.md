@@ -12,9 +12,10 @@
     <tbody id="results"></tbody>
   </table>
 </div>
-<script type="text/javascript" src="prototype.js"></script>
-<script type="text/javascript" src="builder.js"></script>
-<script type="text/javascript" src="sprintf.js"></script>
+<script type="text/javascript" src="requires/prototype.js"></script>
+<script type="text/javascript" src="requires/builder.js"></script>
+<script type="text/javascript" src="requires/sprintf.js"></script>
+
 <script type="text/javascript" src="dragons.js"></script>
 <script type="text/javascript" src="calc.js"></script>
 <script type="text/javascript" src="controller.js"></script>

@@ -5,6 +5,13 @@
 // http://creativecommons.org/publicdomain/zero/1.0/
 //
 // requires Prototype
+// http://prototypejs.org/
+//
+// requires script.aculo.us/Builder
+// http://script.aculo.us/
+//
+// requires sprintf.js
+// https://github.com/alexei/sprintf.js
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // configuration
