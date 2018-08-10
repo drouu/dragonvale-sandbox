@@ -1,6 +1,6 @@
 # dragonvale-sandbox
 
-`breed_calc()` is the algorithm which runs the dragonvale sandbox breeding calculator at https://dvbox.bin.sh/
+`breed_calc()` is the core algorithm which runs the dragonvale sandbox breeding calculator at https://dvbox.bin.sh/
 
 ## basic usage
 
@@ -12,7 +12,7 @@
 </script>
 ```
 
-the arguments `d1` and `d2` specify the parent dragons.  they are keys from the `dragons.js` file, such as `Panlong_Dragon`.  `beb` is a boolean value which specifies whether or not bring-em-back is in effect.
+the arguments `d1` and `d2` are keys from the `dragons.js` file, such as `Panlong_Dragon`, and specify the parent dragons.  `beb` is a boolean value which specifies whether or not bring-em-back is in effect.
 
 for a working example, see https://drouu.github.io/dragonvale-sandbox/
 
