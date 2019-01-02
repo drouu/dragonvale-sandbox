@@ -266,7 +266,13 @@
 // compile requirements
 
   function compile_reqs (dragon) {
-    var list = [ [ dragon['name'] ] ].concat(dragon['reqs']);
+    var list; if (dragon['evolved'] == 'yes') {
+      var clone = [ 'd1.' + dragon['name'], 'd2.' + dragon['name'] ];
+      list = [ clone ].concat(dragon['reqs']);
+    } else {
+      var clone = [ dragon['name'] ];
+      list = [ clone ].concat(dragon['reqs']);
+    }
     var reqs = [];
 
     list.each(function (set) {
