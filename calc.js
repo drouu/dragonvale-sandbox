@@ -249,15 +249,16 @@
 // check available
 
   function check_available (dragon, query) {
-    if (dragon['available'] == 'never')   { return false; }
-    if (query['beb'])                     { return true; }
-    if (/^yes/.test(dragon['available'])) { return true; }
+    if (dragon['available'] == 'never')     { return false; }
+    if (query['beb'])                       { return true; }
+    if (dragon['available'] == 'permanent') { return true; }
+    if (/^yes/.test(dragon['available']))   { return true; }
 
     var d1; if (d1 = query['d1']) {
-      if (dragon['name'] == d1['name'])   { return true; }
+      if (dragon['name'] == d1['name'])     { return true; }
     }
     var d2; if (d2 = query['d2']) {
-      if (dragon['name'] == d2['name'])   { return true; }
+      if (dragon['name'] == d2['name'])     { return true; }
     }
     return false;
   }
