@@ -17,7 +17,7 @@
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // configuration
 
-  var weight = {
+  let weight = {
     'hybrid':           10,
     'primary':          2,
     'default':          1
@@ -26,20 +26,20 @@
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // is element
 
-  var element_list = [
+  let element_list = [
     'plant', 'fire', 'earth', 'cold', 'lightning',
     'water', 'air', 'metal', 'light', 'dark'
   ];
-  var epic_list = [
+  let epic_list = [
     'apocalypse', 'aura', 'chrysalis', 'dream', 'galaxy', 'hidden',
     'monolith', 'moon', 'olympus', 'ornamental', 'rainbow', 'seasonal',
     'snowflake', 'sun', 'surface', 'treasure'
   ];
-  var rift_list = [ 'rift' ];
-  var gem_list = [ 'gemstone', 'crystalline' ];
+  let rift_list = [ 'rift' ];
+  let gem_list = [ 'gemstone', 'crystalline' ];
 
-  var breed_list = element_list.concat(epic_list,rift_list);
-  var concat_list = breed_list.concat(gem_list);
+  let breed_list = element_list.concat(epic_list,rift_list);
+  let concat_list = breed_list.concat(gem_list);
 
   function is_base_element (tag) {
     return (element_list.indexOf(tag) > -1);
@@ -54,7 +54,7 @@
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // is opposite
 
-  var opposite = {
+  let opposite = {
     'plant':            'metal',
     'fire':             'cold',
     'earth':            'air',
@@ -75,8 +75,8 @@
 // breed two dragons
 
   function breed_calc (d1, d2, beb) {
-    var query = breed_query(d1,d2,beb);
-    var list = [];
+    let query = breed_query(d1,d2,beb);
+    let list = [];
 
     if (opposite_primary(query)) {
       // opposite primaries cannot be bred directly
@@ -101,14 +101,14 @@
 // breed query
 
   function breed_query (d1, d2, beb) {
-    var query = {
+    let query = {
       'd1':     dragons[d1],
       'd2':     dragons[d2],
       'beb':    beb,
       'tags':   { 'any dragons': 1 }
     };
     $w('d1 d2').each(function (key) {
-      var tags; if (query[key]['tags']) {
+      let tags; if (query[key]['tags']) {
         tags = query[key]['tags'];
       } else {
         tags = dragon_tags(query[key]);
@@ -119,10 +119,10 @@
         query['tags'][key + '.' + tag] = 1;
       });
     });
-    var list; if (list = breed_elements(query)) {
-      var elements = Object.keys(list['any']);
-      var n = elements.length;
-      var d = Object.keys(list['dream']).length;
+    let list; if (list = breed_elements(query)) {
+      let elements = Object.keys(list['any']);
+      let n = elements.length;
+      let d = Object.keys(list['dream']).length;
 
       query['elements'] = elements;
       query['n_elements'] = n;
@@ -137,15 +137,15 @@
 // dragon tags
 
   function dragon_tags (dragon) {
-    var tags = {};
+    let tags = {};
 
     tags[dragon['name']] = 1;
     tags[dragon['type']] = 1;
 
-    var list; if (list = dragon['elements']) {
+    let list; if (list = dragon['elements']) {
       list.each(function (e) { tags[e] = 1; });
     }
-    var latent; if (latent = dragon['latent']) {
+    let latent; if (latent = dragon['latent']) {
       latent.each(function (e) { tags[e] = 1; });
     }
     if (dragon['rifty']) {
@@ -158,10 +158,10 @@
 // compile breed elements
 
   function breed_elements (query) {
-    var list = { 'any': {}, 'dream': {} };
+    let list = { 'any': {}, 'dream': {} };
 
     $w('d1 d2').each(function (key) {
-      var tags; if (tags = query[key]['tags']) {
+      let tags; if (tags = query[key]['tags']) {
         Object.keys(tags).each(function (tag) {
           if (is_breed_element(tag)) {
             list['any'][tag] = tag;
@@ -194,7 +194,7 @@
 // opposite elements rule
 
   function opposite_elements (query) {
-    var list = query['elements'].filter(function (elem) {
+    let list = query['elements'].filter(function (elem) {
       return is_base_element(elem);
     });
     return (list.length == 2 && is_opposite(list[0],list[1]));
@@ -204,8 +204,8 @@
 // list primary dragons by element
 
   function primary_dragons (elements) {
-    var want = {}; elements.each(function (e) { want[e] = true; });
-    var list = [];
+    let want = {}; elements.each(function (e) { want[e] = true; });
+    let list = [];
 
     Object.keys(dragons).each(function (dkey) {
       if (dragons[dkey]['type'] == 'primary'
@@ -222,17 +222,17 @@
 
   function breedable (dragon, query) {
     if (check_available(dragon,query)) {
-      var reqs; if (dragon['reqs_compiled']) {
+      let reqs; if (dragon['reqs_compiled']) {
         reqs = dragon['reqs_compiled'];
       } else {
         reqs = compile_reqs(dragon);
         dragon['reqs_compiled'] = reqs;
       }
-      var yn = false; reqs.each(function (req) {
+      let yn = false; reqs.each(function (req) {
         if (! yn) {
-          var need = Object.keys(req);
-          var have = query['tags'];
-          var miss = false;
+          let need = Object.keys(req);
+          let have = query['tags'];
+          let miss = false;
 
           need.each(function (tag) {
             if (! have[tag]) { miss = true; }
@@ -254,10 +254,10 @@
     if (dragon['available'] == 'permanent') { return true; }
     if (/^yes/.test(dragon['available']))   { return true; }
 
-    var d1; if (d1 = query['d1']) {
+    let d1; if (d1 = query['d1']) {
       if (dragon['name'] == d1['name'])     { return true; }
     }
-    var d2; if (d2 = query['d2']) {
+    let d2; if (d2 = query['d2']) {
       if (dragon['name'] == d2['name'])     { return true; }
     }
     return false;
@@ -267,17 +267,17 @@
 // compile requirements
 
   function compile_reqs (dragon) {
-    var list; if (dragon['evolved'] == 'yes') {
-      var clone = [ 'd1.' + dragon['name'], 'd2.' + dragon['name'] ];
+    let list; if (dragon['evolved'] == 'yes') {
+      let clone = [ 'd1.' + dragon['name'], 'd2.' + dragon['name'] ];
       list = [ clone ].concat(dragon['reqs']);
     } else {
-      var clone = [ dragon['name'] ];
+      let clone = [ dragon['name'] ];
       list = [ clone ].concat(dragon['reqs']);
     }
-    var reqs = [];
+    let reqs = [];
 
     list.each(function (set) {
-      var req = {}; set.each(function (tag) {
+      let req = {}; set.each(function (tag) {
         req[tag] = 1;
       });
       if (dragon['type'] == 'rift') {
@@ -306,15 +306,12 @@
 // weighted breed list
 
   function weight_calc (d1, d2, list) {
-    var tidal = (d1 == 'Tidal_Dragon' || d2 == 'Tidal_Dragon');
-    var total = 0;
-    var weighted = {};
+    let total = 0;
+    let weighted = {};
 
     list.each(function (key) {
-      var w = dragon_weight(key);
-      if (tidal) { w = (10 / w); }
+      weighted[key] = dragon_weight(key);
 
-      weighted[key] = w;
       if (key == d1) { weighted[key] *= 1.5; }
       if (key == d2) { weighted[key] *= 1.5; }
 
@@ -326,7 +323,7 @@
     return weighted;
   }
   function dragon_weight (key) {
-    var w; if (w = weight[key]) {
+    let w; if (w = weight[key]) {
       return w;
     } else if (w = weight[dragons[key]['type']]) {
       return w;
@@ -338,7 +335,7 @@
 // format breed time
 
   function fmt_breed_time (key, fast) {
-    var t; if (t = dragons[key]['time']) {
+    let t; if (t = dragons[key]['time']) {
       if (fast) {
         return fmt_dhms(Math.floor(t * 0.80));
       } else {
@@ -354,17 +351,17 @@
 
   function fmt_dhms (t) {
     if (t > 0 && t < 60) {
-      var text = sprintf('%d sec',Math.floor(t + 0.5));
-      var attr = { 'style': 'white-space: nowrap;' };
+      let text = sprintf('%d sec',Math.floor(t + 0.5));
+      let attr = { 'style': 'white-space: nowrap;' };
 
       return Builder.node('span',attr,text);
     } else {
-      var d; if (t > 86400) {
+      let d; if (t > 86400) {
           d = Math.floor(t / 86400);   t = (t % 86400);
       }
-      var h = Math.floor(t /  3600);   t = (t %  3600);
-      var m = Math.floor(t /    60);   t = (t %    60);
-      var s = Math.floor(t);
+      let h = Math.floor(t /  3600);   t = (t %  3600);
+      let m = Math.floor(t /    60);   t = (t %    60);
+      let s = Math.floor(t);
 
       if (d) {
         return sprintf('%d:%02d:%02d:%02d',d,h,m,s);
