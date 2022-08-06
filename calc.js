@@ -32,8 +32,8 @@
   ];
   let epic_list = [
     'apocalypse', 'aura', 'chrysalis', 'dream', 'galaxy', 'hidden',
-    'monolith', 'moon', 'olympus', 'ornamental', 'rainbow', 'seasonal',
-    'snowflake', 'sun', 'surface', 'treasure'
+    'melody', 'monolith', 'moon', 'olympus', 'ornamental', 'rainbow',
+    'seasonal', 'snowflake', 'sun', 'surface', 'treasure', 'zodiac'
   ];
   let rift_list = [ 'rift' ];
   let gem_list = [ 'gemstone', 'crystalline' ];

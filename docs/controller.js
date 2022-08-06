@@ -16,8 +16,8 @@
 
   function init_sandbox () {
     Object.keys(dragons).sort().each(function (key) {
-      var attr = { 'value': key };
-      var name = dragons[key]['name'];
+      let attr = { 'value': key };
+      let name = dragons[key]['name'];
 
       $('d1').insert(Builder.node('option',attr,name));
       $('d2').insert(Builder.node('option',attr,name));
@@ -36,10 +36,10 @@
 // update results
 
   function update_results () {
-    var d1 = $('d1').getValue();
-    var d2 = $('d2').getValue();
-    var beb = $('beb').getValue();
-    var list = breed_calc(d1,d2,beb);
+    let d1 = $('d1').getValue();
+    let d2 = $('d2').getValue();
+    let beb = $('beb').getValue();
+    let list = breed_calc(d1,d2,beb);
 
     if (list) {
       $('results').update('');
