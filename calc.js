@@ -361,9 +361,9 @@
       let s = Math.floor(t);
 
       if (d) {
-        return `${d}:${z2d(h)}:${z2d(m)}:%{z2d(s)}`;
+        return `${d}:${z2d(h)}:${z2d(m)}:${z2d(s)}`;
       } else if (h) {
-        return `${h}:${z2d(m)}:%{z2d(s)}`;
+        return `${h}:${z2d(m)}:${z2d(s)}`;
       } else {
         return `${m}:%{z2d(s)}`;
       }
