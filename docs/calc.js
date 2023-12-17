@@ -58,7 +58,7 @@
     'lightning':        'water',
     'light':            'dark'
   };
-  Object.keys(opposite).each(function (key) {
+  Object.keys(opposite).forEach(key => {
     opposite[opposite[key]] = key;
   });
   function is_opposite (e1, e2) {
@@ -83,7 +83,7 @@
       if (opposite_elements(query)) {
         list = primary_dragons(query['elements']);
       }
-      Object.keys(dragons).each(function (dkey) {
+      Object.keys(dragons).forEach(dkey => {
         if (breedable(dragons[dkey],query)) { list.push(dkey); }
       });
     }
@@ -104,14 +104,14 @@
       'beb':    beb,
       'tags':   { 'any dragons': 1 }
     };
-    $w('d1 d2').each(function (key) {
+    $w('d1 d2').forEach(key => {
       let tags; if (query[key]['tags']) {
         tags = query[key]['tags'];
       } else {
         tags = dragon_tags(query[key]);
         query[key]['tags'] = tags;
       }
-      Object.keys(tags).each(function (tag) {
+      Object.keys(tags).forEach(tag => {
         query['tags'][tag] = 1;
         query['tags'][key + '.' + tag] = 1;
       });
@@ -140,10 +140,10 @@
     tags[dragon['type']] = 1;
 
     let list; if (list = dragon['elements']) {
-      list.each(function (e) { tags[e] = 1; });
+      list.forEach(e => { tags[e] = 1; });
     }
     let latent; if (latent = dragon['latent']) {
-      latent.each(function (e) { tags[e] = 1; });
+      latent.forEach(e => { tags[e] = 1; });
     }
     if (dragon['rifty']) {
       tags['rifty'] = 1;
@@ -157,9 +157,9 @@
   function breed_elements (query) {
     let list = { 'any': {}, 'dream': {} };
 
-    $w('d1 d2').each(function (key) {
+    $w('d1 d2').forEach(key => {
       let tags; if (tags = query[key]['tags']) {
-        Object.keys(tags).each(function (tag) {
+        Object.keys(tags).forEach(tag => {
           if (is_breed_element(tag)) {
             list['any'][tag] = tag;
 
@@ -191,9 +191,7 @@
 // opposite elements rule
 
   function opposite_elements (query) {
-    let list = query['elements'].filter(function (elem) {
-      return is_base_element(elem);
-    });
+    let list = query['elements'].filter(e => is_base_element(e));
     return (list.length == 2 && is_opposite(list[0],list[1]));
   }
 
@@ -201,10 +199,10 @@
 // list primary dragons by element
 
   function primary_dragons (elements) {
-    let want = {}; elements.each(function (e) { want[e] = true; });
+    let want = {}; elements.forEach(e => { want[e] = true; });
     let list = [];
 
-    Object.keys(dragons).each(function (dkey) {
+    Object.keys(dragons).forEach(dkey => {
       if (dragons[dkey]['type'] == 'primary'
         && want[dragons[dkey]['primary']]
       ) {
@@ -225,13 +223,13 @@
         reqs = compile_reqs(dragon);
         dragon['reqs_compiled'] = reqs;
       }
-      let yn = false; reqs.each(function (req) {
+      let yn = false; reqs.forEach(req => {
         if (! yn) {
           let need = Object.keys(req);
           let have = query['tags'];
           let miss = false;
 
-          need.each(function (tag) {
+          need.forEach(tag => {
             if (! have[tag]) { miss = true; }
           });
           if (! miss) { yn = true; }
@@ -273,8 +271,8 @@
     }
     let reqs = [];
 
-    list.each(function (set) {
-      let req = {}; set.each(function (tag) {
+    list.forEach(set => {
+      let req = {}; set.forEach(tag => {
         req[tag] = 1;
       });
       if (dragon['type'] == 'rift') {
@@ -290,7 +288,7 @@
 // sort by breed time
 
   function sort_by_time (list) {
-    return list.sort(function (a, b) {
+    return list.sort((a, b) => {
       if      (dragons[a]['time'] < dragons[b]['time']) { return -1; }
       else if (dragons[a]['time'] > dragons[b]['time']) { return  1; }
       else if (dragons[a]['name'] < dragons[b]['name']) { return -1; }
@@ -306,7 +304,7 @@
     let total = 0;
     let weighted = {};
 
-    list.each(function (key) {
+    list.forEach(key => {
       weighted[key] = dragon_weight(key);
 
       if (key == d1) { weighted[key] *= 1.5; }
@@ -314,7 +312,7 @@
 
       total += weighted[key];
     });
-    list.each(function (key) {
+    list.forEach(key => {
       weighted[key] = ((weighted[key] / total) * 100);
     });
     return weighted;
@@ -347,7 +345,7 @@
 // format day:hour:min:sec
 
   function fmt_dhms (t) {
-    let _02d = (i) => (i > 9) ? i : `0${i}`;
+    let z2d = (i) => (i > 9) ? i : `0${i}`;
 
     if (t > 0 && t < 60) {
       let text = `${Math.floor(t + 0.5)} sec`;
@@ -363,11 +361,11 @@
       let s = Math.floor(t);
 
       if (d) {
-        return `${d}:${_02d(h)}:${_02d(m)}:%{_02d(s)}`;
+        return `${d}:${z2d(h)}:${z2d(m)}:%{z2d(s)}`;
       } else if (h) {
-        return `${h}:${_02d(m)}:%{_02d(s)}`;
+        return `${h}:${z2d(m)}:%{z2d(s)}`;
       } else {
-        return `${m}:%{_02d(s)}`;
+        return `${m}:%{z2d(s)}`;
       }
     }
   }
@@ -375,7 +373,7 @@
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // hack dragons
 
-  Object.keys(dragons).each(function (key) {
+  Object.keys(dragons).forEach(key => {
     dragons[key]['tags'] = dragon_tags(dragons[key]);
     dragons[key]['time'] = parseInt(dragons[key]['time']);
     dragons[key]['dhms'] = fmt_dhms(dragons[key]['time']);

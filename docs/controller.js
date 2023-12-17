@@ -15,7 +15,7 @@
 // init sandbox
 
   function init_sandbox () {
-    Object.keys(dragons).sort().each(function (key) {
+    Object.keys(dragons).sort().forEach(key => {
       let attr = { 'value': key };
       let name = dragons[key]['name'];
 
@@ -44,7 +44,7 @@
     if (list) {
       $('results').update('');
 
-      list.sort().each(function (key) {
+      list.sort().forEach(key => {
         $('results').insert(Builder.node('tr',[
           Builder.node('td',dragons[key]['name']),
           Builder.node('td',dragons[key]['dhms']),
