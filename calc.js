@@ -365,7 +365,7 @@
       } else if (h) {
         return `${h}:${z2d(m)}:${z2d(s)}`;
       } else {
-        return `${m}:%{z2d(s)}`;
+        return `${m}:${z2d(s)}`;
       }
     }
   }
