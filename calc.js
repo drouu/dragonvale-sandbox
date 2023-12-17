@@ -10,9 +10,6 @@
 //
 // requires script.aculo.us/Builder
 // http://script.aculo.us/
-//
-// requires sprintf.js
-// https://github.com/alexei/sprintf.js
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // configuration
@@ -350,8 +347,10 @@
 // format day:hour:min:sec
 
   function fmt_dhms (t) {
+    let _02d = (i) => (i > 9) ? i : `0${i}`;
+
     if (t > 0 && t < 60) {
-      let text = sprintf('%d sec',Math.floor(t + 0.5));
+      let text = `${Math.floor(t + 0.5)} sec`;
       let attr = { 'style': 'white-space: nowrap;' };
 
       return Builder.node('span',attr,text);
@@ -364,11 +363,11 @@
       let s = Math.floor(t);
 
       if (d) {
-        return sprintf('%d:%02d:%02d:%02d',d,h,m,s);
+        return `${d}:${_02d(h)}:${_02d(m)}:%{_02d(s)}`;
       } else if (h) {
-        return sprintf(     '%d:%02d:%02d',  h,m,s);
+        return `${h}:${_02d(m)}:%{_02d(s)}`;
       } else {
-        return sprintf(          '%d:%02d',    m,s);
+        return `${m}:%{_02d(s)}`;
       }
     }
   }

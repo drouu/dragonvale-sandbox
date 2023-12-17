@@ -10,7 +10,6 @@
 </div>
 <script type="text/javascript" src="requires/prototype.js"></script>
 <script type="text/javascript" src="requires/builder.js"></script>
-<script type="text/javascript" src="requires/sprintf.js"></script>
 
 <script type="text/javascript" src="dragons.js"></script>
 <script type="text/javascript" src="calc.js"></script>
