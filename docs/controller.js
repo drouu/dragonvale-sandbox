@@ -46,20 +46,13 @@
         let tr = document.createElement('tr');
 
         tr.appendChild(build_node('td',dragon['name']));
-
-        if (dragon['dhms'] instanceof HTMLElement) {
-          tr.appendChild(dragon['dhms']);
-        } else {
-          tr.appendChild(build_node('td',dragon['dhms']));
-        }
+        tr.appendChild(build_node('td',dragon['dhms']));
         tr.appendChild(build_node('td',dragon['habitats'].join(', ')));
 
         results.appendChild(tr);
       });
     } else {
-      let tr = document.createElement('tr');
-
-      tr.appendChild(build_node('td','No dragons'));
+      let tr = build_node('tr',build_node('td','No dragons'));
       results.appendChild(tr);
     }
   }
@@ -67,10 +60,14 @@
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // build node
 
-  function build_node (type, text) {
+  function build_node (type, content) {
     let node = document.createElement(type); 
-    node.appendChild(document.createTextNode(text));
 
+    if (content instanceof HTMLElement) {
+      node.appendChild(content);
+    } else {
+      node.appendChild(document.createTextNode(content));
+    }
     return node;
   }
   function build_option (value, text) {
