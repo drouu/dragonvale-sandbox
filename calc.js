@@ -12,15 +12,6 @@
 // http://script.aculo.us/
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// configuration
-
-  let weight = {
-    'hybrid':           10,
-    'primary':          2,
-    'default':          1
-  };
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // is element
 
   let element_list = [
@@ -295,35 +286,6 @@
       else if (dragons[a]['name'] > dragons[b]['name']) { return  1; }
       return 0;
     });
-  }
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// weighted breed list
-
-  function weight_calc (d1, d2, list) {
-    let total = 0;
-    let weighted = {};
-
-    list.forEach(key => {
-      weighted[key] = dragon_weight(key);
-
-      if (key == d1) { weighted[key] *= 1.5; }
-      if (key == d2) { weighted[key] *= 1.5; }
-
-      total += weighted[key];
-    });
-    list.forEach(key => {
-      weighted[key] = ((weighted[key] / total) * 100);
-    });
-    return weighted;
-  }
-  function dragon_weight (key) {
-    let w; if (w = weight[key]) {
-      return w;
-    } else if (w = weight[dragons[key]['type']]) {
-      return w;
-    }
-    return weight['default'];
   }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
