@@ -5,22 +5,6 @@
 // http://unlicense.org/
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// requires Prototype
-// http://prototypejs.org/
-//
-// requires script.aculo.us/Builder
-// http://script.aculo.us/
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// configuration
-
-  let weight = {
-    'hybrid':           10,
-    'primary':          2,
-    'default':          1
-  };
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // is element
 
   let element_list = [
@@ -84,9 +68,12 @@
         list = primary_dragons(query['elements']);
       }
       Object.keys(dragons).forEach(dkey => {
-        if (breedable(dragons[dkey],query)) { list.push(dkey); }
+        if (is_breedable(dragons[dkey],query)) list.push(dkey);
       });
     }
+    if (query[d1]['clonable']) list.push(d1);
+    if (query[d2]['clonable']) list.push(d2);
+
     if (list.length > 0) {
       return list.uniq();
     } else {
@@ -99,12 +86,12 @@
 
   function breed_query (d1, d2, beb) {
     let query = {
-      'd1':     dragons[d1],
-      'd2':     dragons[d2],
-      'beb':    beb,
-      'tags':   { 'any dragons': 1 }
+      d1:               dragons[d1],
+      d2:               dragons[d2],
+      tags:             { 'any dragons': true },
+      beb:              (beb ?? false)
     };
-    $w('d1 d2').forEach(key => {
+    ['d1','d2'].forEach(key => {
       let tags; if (query[key]['tags']) {
         tags = query[key]['tags'];
       } else {
@@ -112,8 +99,8 @@
         query[key]['tags'] = tags;
       }
       Object.keys(tags).forEach(tag => {
-        query['tags'][tag] = 1;
-        query['tags'][key + '.' + tag] = 1;
+        query['tags'][tag] = true;
+        query['tags'][`${key}.${tag}`] = true;
       });
     });
     let list; if (list = breed_elements(query)) {
@@ -124,8 +111,8 @@
       query['elements'] = elements;
       query['n_elements'] = n;
 
-      if (n >= 4) { query['tags']['four elements'] = 1; }
-      if (d >= 2) { query['tags']['dream elements'] = 1; }
+      query['tags']['four elements'] = (n >= 4);
+      query['tags']['dream elements'] = (d >= 2);
     }
     return query;
   }
@@ -134,19 +121,16 @@
 // dragon tags
 
   function dragon_tags (dragon) {
-    let tags = {};
-
-    tags[dragon['name']] = 1;
-    tags[dragon['type']] = 1;
-
+    let tags = {
+      [dragon.name]:    true,
+      [dragon.type]:    true,
+      rifty:            (dragon.rifty ?? false)
+    };
     let list; if (list = dragon['elements']) {
-      list.forEach(e => { tags[e] = 1; });
+      list.forEach(e => tags[e] = true);
     }
     let latent; if (latent = dragon['latent']) {
-      latent.forEach(e => { tags[e] = 1; });
-    }
-    if (dragon['rifty']) {
-      tags['rifty'] = 1;
+      latent.forEach(e => tags[e] = true);
     }
     return tags;
   }
@@ -155,16 +139,16 @@
 // compile breed elements
 
   function breed_elements (query) {
-    let list = { 'any': {}, 'dream': {} };
+    let list = { any: {}, dream: {} };
 
-    $w('d1 d2').forEach(key => {
+    ['d1','d2'].forEach(key => {
       let tags; if (tags = query[key]['tags']) {
         Object.keys(tags).forEach(tag => {
           if (is_breed_element(tag)) {
-            list['any'][tag] = tag;
+            list['any'][tag] = true;
 
             if (tag != 'light' && tag != 'dark') {
-              list['dream'][tag] = tag;
+              list['dream'][tag] = true;
             }
           }
         });
@@ -215,46 +199,43 @@
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // check breedable
 
-  function breedable (dragon, query) {
-    if (check_available(dragon,query)) {
-      let reqs; if (dragon['reqs_compiled']) {
-        reqs = dragon['reqs_compiled'];
-      } else {
-        reqs = compile_reqs(dragon);
-        dragon['reqs_compiled'] = reqs;
-      }
-      let yn = false; reqs.forEach(req => {
-        if (! yn) {
-          let need = Object.keys(req);
-          let have = query['tags'];
-          let miss = false;
-
-          need.forEach(tag => {
-            if (! have[tag]) { miss = true; }
-          });
-          if (! miss) { yn = true; }
-        }
-      });
-      return yn;
+  function is_breedable (dragon, query) {
+    if (! is_available(dragon,query)) {
+      return false;
     }
-    return false;
+    let reqs; if (dragon['reqs_compiled']) {
+      reqs = dragon['reqs_compiled'];
+    } else {
+      reqs = compile_reqs(dragon);
+      dragon['reqs_compiled'] = reqs;
+    }
+    let have = query['tags'];
+    let breedable = false;
+
+    reqs.forEach(req => {
+      if (! breedable) {
+        let need = Object.keys(req);
+        let miss = false;
+
+        need.forEach(tag => {
+          if (! have[tag]) miss = true;
+        });
+        if (! miss) breedable = true;
+      }
+    });
+    return breedable;
   }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // check available
 
-  function check_available (dragon, query) {
-    if (dragon['available'] == 'never')     { return false; }
-    if (query['beb'])                       { return true; }
-    if (dragon['available'] == 'permanent') { return true; }
-    if (/^yes/.test(dragon['available']))   { return true; }
+  function is_available (dragon, query) {
+    if (dragon['available'] == 'never')         return false;
 
-    let d1; if (d1 = query['d1']) {
-      if (dragon['name'] == d1['name'])     { return true; }
-    }
-    let d2; if (d2 = query['d2']) {
-      if (dragon['name'] == d2['name'])     { return true; }
-    }
+    if (query['beb'])                           return true;
+    if (dragon['available'] == 'permanent')     return true;
+    if (/^yes/.test(dragon['available']))       return true;
+
     return false;
   }
 
@@ -262,22 +243,15 @@
 // compile requirements
 
   function compile_reqs (dragon) {
-    let list; if (dragon['evolved'] == 'yes') {
-      let clone = [ 'd1.' + dragon['name'], 'd2.' + dragon['name'] ];
-      list = [ clone ].concat(dragon['reqs']);
-    } else {
-      let clone = [ dragon['name'] ];
-      list = [ clone ].concat(dragon['reqs']);
-    }
     let reqs = [];
 
-    list.forEach(set => {
+    dragon['reqs'].forEach(set => {
       let req = {}; set.forEach(tag => {
-        req[tag] = 1;
+        req[tag] = true;
       });
       if (dragon['type'] == 'rift') {
-        req['d1.rifty'] = 1;
-        req['d2.rifty'] = 1;
+        req['d1.rifty'] = true;
+        req['d2.rifty'] = true;
       }
       reqs.push(req);
     });
@@ -289,41 +263,12 @@
 
   function sort_by_time (list) {
     return list.sort((a, b) => {
-      if      (dragons[a]['time'] < dragons[b]['time']) { return -1; }
-      else if (dragons[a]['time'] > dragons[b]['time']) { return  1; }
-      else if (dragons[a]['name'] < dragons[b]['name']) { return -1; }
-      else if (dragons[a]['name'] > dragons[b]['name']) { return  1; }
+      if      (dragons[a]['time'] < dragons[b]['time']) return -1;
+      else if (dragons[a]['time'] > dragons[b]['time']) return  1;
+      else if (dragons[a]['name'] < dragons[b]['name']) return -1;
+      else if (dragons[a]['name'] > dragons[b]['name']) return  1;
       return 0;
     });
-  }
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// weighted breed list
-
-  function weight_calc (d1, d2, list) {
-    let total = 0;
-    let weighted = {};
-
-    list.forEach(key => {
-      weighted[key] = dragon_weight(key);
-
-      if (key == d1) { weighted[key] *= 1.5; }
-      if (key == d2) { weighted[key] *= 1.5; }
-
-      total += weighted[key];
-    });
-    list.forEach(key => {
-      weighted[key] = ((weighted[key] / total) * 100);
-    });
-    return weighted;
-  }
-  function dragon_weight (key) {
-    let w; if (w = weight[key]) {
-      return w;
-    } else if (w = weight[dragons[key]['type']]) {
-      return w;
-    }
-    return weight['default'];
   }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -349,9 +294,12 @@
 
     if (t > 0 && t < 60) {
       let text = `${Math.floor(t + 0.5)} sec`;
-      let attr = { 'style': 'white-space: nowrap;' };
+      let node = document.createElement('span');
 
-      return Builder.node('span',attr,text);
+      node.style.whiteSpace = 'nowrap';
+      node.appendChild(document.createTextNode(text));
+
+      return node;
     } else {
       let d; if (t > 86400) {
           d = Math.floor(t / 86400);   t = (t % 86400);
@@ -375,7 +323,6 @@
 
   Object.keys(dragons).forEach(key => {
     dragons[key]['tags'] = dragon_tags(dragons[key]);
-    dragons[key]['time'] = parseInt(dragons[key]['time']);
     dragons[key]['dhms'] = fmt_dhms(dragons[key]['time']);
   });
 

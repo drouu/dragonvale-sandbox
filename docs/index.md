@@ -8,9 +8,6 @@
     <tbody id="results"></tbody>
   </table>
 </div>
-<script type="text/javascript" src="requires/prototype.js"></script>
-<script type="text/javascript" src="requires/builder.js"></script>
-
 <script type="text/javascript" src="dragons.js"></script>
 <script type="text/javascript" src="calc.js"></script>
 <script type="text/javascript" src="controller.js"></script>
