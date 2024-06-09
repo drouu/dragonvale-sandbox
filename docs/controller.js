@@ -45,9 +45,9 @@
         let dragon = dragons[key];
         let tr = document.createElement('tr');
 
-        tr.appendChild(build_node('td',dragon['name'));
-        tr.appendChild(build_node('td',dragon['dhms'));
-        tr.appendChild(build_node('td',dragon['habitats').join(', '));
+        tr.appendChild(build_node('td',dragon['name']));
+        tr.appendChild(build_node('td',dragon['dhms']));
+        tr.appendChild(build_node('td',dragon['habitats'].join(', ')));
 
         results.appendChild(tr);
       });
