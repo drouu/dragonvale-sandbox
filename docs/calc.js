@@ -75,7 +75,7 @@
     if (query['d2']['clonable']) list.push(d2);
 
     if (list.length > 0) {
-      return list.uniq();
+      return list.filter((e,i,a) => (a.indexOf(e) == i));
     } else {
       return false;
     }
