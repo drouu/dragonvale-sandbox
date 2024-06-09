@@ -1,6 +1,6 @@
 # dragonvale-sandbox
 
-`breed_calc()` is the core algorithm which runs the dragonvale sandbox breeding calculator at https://dvbox.bin.sh/
+`breed_calc()` is an open source abstraction of the core algorithm which runs the dragonvale sandbox breeding calculator at https://dvbox.bin.sh/
 
 ## basic usage
 
