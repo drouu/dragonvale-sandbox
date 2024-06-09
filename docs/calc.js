@@ -71,8 +71,8 @@
         if (is_breedable(dragons[dkey],query)) list.push(dkey);
       });
     }
-    if (query[d1]['clonable']) list.push(d1);
-    if (query[d2]['clonable']) list.push(d2);
+    if (query['d1']['clonable']) list.push(d1);
+    if (query['d2']['clonable']) list.push(d2);
 
     if (list.length > 0) {
       return list.uniq();
