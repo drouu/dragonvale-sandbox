@@ -46,7 +46,12 @@
         let tr = document.createElement('tr');
 
         tr.appendChild(build_node('td',dragon['name']));
-        tr.appendChild(build_node('td',dragon['dhms']));
+
+        if (dragon['dhms'] instanceof HTMLElement) {
+          tr.appendChild(dragon['dhms']);
+        } else {
+          tr.appendChild(build_node('td',dragon['dhms']));
+        }
         tr.appendChild(build_node('td',dragon['habitats'].join(', ')));
 
         results.appendChild(tr);
