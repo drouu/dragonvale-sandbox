@@ -15,8 +15,8 @@
     Object.keys(dragons).sort().forEach(key => {
       let name = dragons[key]['name'];
 
-      d1.insert(build_option(key,name));
-      d2insert(Builder.node(key,name));
+      d1.appendChild(build_option(key,name));
+      d2.appendChild(build_option(key,name));
     });
     d1.value = 'Fire_Dragon';
     d2.value = 'Plant_Dragon';
