@@ -38,12 +38,12 @@
     let list = breed_calc(d1,d2,beb);
     let results = document.getElementById('results');
 
-    if (list) {
-      results.replaceChildren();
+    results.replaceChildren();
 
+    if (list) {
       list.sort().forEach(key => {
         let dragon = dragons[key];
-        let tr = document.createElement('tr');
+        let tr = build_node('tr');
 
         tr.appendChild(build_node('td',dragon['name']));
         tr.appendChild(build_node('td',dragon['dhms']));
@@ -63,10 +63,12 @@
   function build_node (type, content) {
     let node = document.createElement(type); 
 
-    if (content instanceof HTMLElement) {
-      node.appendChild(content);
-    } else {
-      node.appendChild(document.createTextNode(content));
+    if (content) {
+      if (content instanceof HTMLElement) {
+        node.appendChild(content);
+      } else {
+        node.appendChild(document.createTextNode(content));
+      }
     }
     return node;
   }
